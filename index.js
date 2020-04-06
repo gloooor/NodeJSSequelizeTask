@@ -19,8 +19,6 @@ const port = 3000;
 const message = (num, res) => {
   res.writeHead(404, {
     "Content-type": "application/json; charset=utf-8",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "*",
   });
   switch (num) {
     case 1:
@@ -95,11 +93,13 @@ const updateDB = (table, body) => {
   let str = splitWord(table.toString())[1];
   table.update(body, { where: { [str]: `${body.table}` } });
 };
+
 const deleteDB = (table, id) => {
   id = decodeURI(id);
   let str = splitWord(table.toString())[1];
   table.destroy({ where: { [str]: `${id}` } });
 };
+
 const handler = (req, res) => {
   sequelize.authenticate().then(() => {
     console.log("connected");
